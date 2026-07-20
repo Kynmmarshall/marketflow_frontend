@@ -1,16 +1,29 @@
-# React + Vite
+# SmartStock Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React (Vite) webapp for SmartStock. Week 1 scope: register, log in, and view
+a role-gated page — talks to the [auth service](../MarketFlow/services/auth-service).
 
-Currently, two official plugins are available:
+## Run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+npm install
+cp .env.example .env   # points at the auth service, defaults to http://localhost:3000
+npm run dev
+```
 
-## React Compiler
+Make sure the auth service is running first (`docker compose up --build` from
+the `MarketFlow` repo, or `npm start` inside `services/auth-service`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## What's here
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `src/api/client.js` — fetch wrapper for the auth service (`register`,
+  `login`, `fetchReports`)
+- `src/context/AuthContext.jsx` — holds the JWT + user, persists to
+  `localStorage`, exposes `login`/`register`/`logout`
+- `src/pages/LoginPage.jsx`, `RegisterPage.jsx` — auth forms
+- `src/pages/DashboardPage.jsx` — protected page; the "Load reports" button
+  calls the role-gated `/api/reports` endpoint so you can demonstrate RBAC
+  (and the live examiner rule-change) visually — an Admin sees data, a
+  Cashier sees a 403 once the backend rule is tightened
+- `src/components/ProtectedRoute.jsx` — redirects to `/login` if not
+  authenticated
