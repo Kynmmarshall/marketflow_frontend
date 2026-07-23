@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - "5173:5173"
+    environment:
+      # The browser calls this URL directly, not the frontend container —
+      # so it must be an address reachable from your machine (localhost),
+      # matching wherever the auth-service container publishes its port.
+      VITE_API_URL: http://localhost:3000
