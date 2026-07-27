@@ -7,11 +7,9 @@
    dot-matrix numeral face — instead of a generic SaaS dashboard look.
    ========================================================================== */
 
-@import '@fontsource/space-mono/400.css';
-@import '@fontsource/space-mono/700.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
+/* Fonts are imported in main.jsx via plain JS imports (more reliable
+   resolution across different PostCSS/Vite configurations than a CSS
+   @import of a bare npm specifier). */
 
 :root {
   /* ---- Palette: kraft paper, ledger ink, till-display green, tag red ---- */
