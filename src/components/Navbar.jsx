@@ -11,16 +11,27 @@ export function Navbar() {
   }
 
   return (
-    <header className="navbar">
-      <span className="brand">SmartStock</span>
-      {auth && (
-        <div className="navbar-user">
-          <span>
-            {auth.user.name} <span className={`role-badge role-${auth.user.role}`}>{auth.user.role}</span>
+    <>
+      <header className="navbar">
+        <div className="brand">
+          <span className="brand-mark">
+            Smart<span>Stock</span>
           </span>
-          <button type="button" onClick={handleLogout}>Log out</button>
         </div>
-      )}
-    </header>
+        {auth && (
+          <div className="navbar-user">
+            <span className="session-tag">
+              <span className="led" aria-hidden="true" />
+              {auth.user.name}
+            </span>
+            <span className={`role-badge role-${auth.user.role}`}>{auth.user.role}</span>
+            <button type="button" className="btn-ghost" onClick={handleLogout}>
+              Log out
+            </button>
+          </div>
+        )}
+      </header>
+      <div className="barcode" aria-hidden="true" />
+    </>
   );
 }

@@ -28,8 +28,11 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="auth-card">
+    <div className="auth-card ticket">
+      <span className="eyebrow">New staff ticket</span>
       <h1>Create account</h1>
+      <p className="tagline">Set up till access for a new admin or cashier.</p>
+      <hr className="ticket-divider" />
       <form onSubmit={handleSubmit}>
         <label>
           Name

@@ -23,22 +23,35 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="dashboard">
-      <h1>Welcome, {auth.user.name}</h1>
-      <p>
-        You are signed in as <span className={`role-badge role-${auth.user.role}`}>{auth.user.role}</span>.
-        This is proven by the JWT issued at login — every request below sends it in the
-        <code>Authorization</code> header so the server can verify who you are and what you're allowed to do.
-      </p>
+    <div className="dashboard ticket">
+      <div className="dashboard-header">
+        <div>
+          <span className="eyebrow">Shift summary</span>
+          <h1>Welcome, {auth.user.name}</h1>
+          <p>
+            Signed in as <span className={`role-badge role-${auth.user.role}`}>{auth.user.role}</span>.
+            Every request below sends the JWT issued at login in the <code>Authorization</code>{' '}
+            header, so the server can verify who you are and what you're allowed to do.
+          </p>
+        </div>
+      </div>
+
+      <hr className="ticket-divider" />
 
       <div className="rbac-demo">
         <h2>Role-gated resource: /api/reports</h2>
-        <p>This endpoint checks your role server-side before returning data.</p>
-        <button type="button" onClick={handleLoadReports} disabled={loading}>
+        <p className="tagline">This endpoint checks your role server-side before returning data.</p>
+        <button type="button" className="btn-primary" onClick={handleLoadReports} disabled={loading}>
           {loading ? 'Loading…' : 'Load reports'}
         </button>
-        {result && <pre className="notice success">{JSON.stringify(result, null, 2)}</pre>}
-        {error && <p className="notice error">{error}</p>}
+
+        {result && <pre className="terminal">{JSON.stringify(result, null, 2)}</pre>}
+        {error && <p className="notice error" style={{ marginTop: 16 }}>{error}</p>}
+        {!result && !error && !loading && (
+          <p className="terminal-empty" style={{ marginTop: 16 }}>
+            $ waiting for request…
+          </p>
+        )}
       </div>
     </div>
   );

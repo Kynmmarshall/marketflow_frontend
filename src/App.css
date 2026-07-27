@@ -1,22 +1,47 @@
+/* ==========================================================================
+   Layout shell
+   ========================================================================== */
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
-  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  padding: 18px 32px;
+  background: var(--paper-raised);
+  border-bottom: 3px solid var(--ink);
 }
 
 .brand {
-  font-weight: 600;
-  font-size: 20px;
-  color: var(--text-h);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark span {
+  color: var(--till);
 }
 
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 15px;
+  gap: 14px;
+  font-size: 0.9rem;
+}
+
+.session-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--display);
+  font-size: 0.72rem;
 }
 
 main {
@@ -24,124 +49,230 @@ main {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 48px 24px;
+  padding: 56px 24px;
 }
 
-.auth-card {
-  width: 100%;
-  max-width: 360px;
-  text-align: left;
-}
-
-.auth-card h1 {
-  font-size: 28px;
-  margin: 0 0 24px;
-  text-align: center;
-}
+/* ==========================================================================
+   Buttons, inputs, notices — shared across auth + dashboard
+   ========================================================================== */
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 label {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 14px;
-  color: var(--text-h);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
   text-align: left;
 }
 
 input,
 select {
-  font: inherit;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--text-h);
+  padding: 9px 2px;
+  border: none;
+  border-bottom: 2px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 0;
+  transition: border-color 0.15s ease;
 }
 
-button {
-  font: inherit;
-  padding: 10px 16px;
-  border: 1px solid var(--accent-border);
-  border-radius: 6px;
-  background: var(--accent-bg);
-  color: var(--text-h);
+input:focus,
+select:focus {
+  border-color: var(--till);
+}
+
+button[type='submit'],
+.btn-primary {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 12px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: var(--till);
+  color: var(--paper-raised);
   cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+
+button[type='submit']:hover:not(:disabled),
+.btn-primary:hover:not(:disabled) {
+  background: #0e8a60;
+}
+
+button[type='submit']:active:not(:disabled),
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
+.btn-ghost {
+  font-family: var(--display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: var(--ink);
+  color: var(--paper-raised);
+}
+
 .switch-link {
-  margin-top: 16px;
+  margin-top: 6px;
   text-align: center;
-  font-size: 14px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
 }
 
 .notice {
-  font-size: 14px;
-  padding: 10px 12px;
-  border-radius: 6px;
+  font-size: 0.88rem;
+  padding: 11px 13px;
+  border-radius: 3px;
   text-align: left;
   white-space: pre-wrap;
+  border-left: 3px solid transparent;
 }
 
 .notice.error {
-  background: rgba(220, 38, 38, 0.1);
-  color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: var(--stamp-bg);
+  color: var(--stamp);
+  border-left-color: var(--stamp);
 }
 
 .notice.success {
-  background: rgba(22, 163, 74, 0.1);
-  color: #16a34a;
-  border: 1px solid rgba(22, 163, 74, 0.3);
+  background: rgba(11, 107, 74, 0.08);
+  color: var(--till);
+  border-left-color: var(--till);
 }
 
 .role-badge {
   display: inline-block;
-  padding: 2px 8px;
+  padding: 2px 9px;
   border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  border: 1.5px solid currentColor;
 }
 
 .role-admin {
-  background: var(--accent-bg);
-  color: var(--accent);
+  color: var(--stamp);
+  background: var(--stamp-bg);
 }
 
 .role-cashier {
-  background: var(--code-bg);
-  color: var(--text-h);
+  color: var(--till);
+  background: rgba(11, 107, 74, 0.08);
 }
+
+/* ==========================================================================
+   Auth pages — the "register slip" ticket
+   ========================================================================== */
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  text-align: left;
+}
+
+.auth-card .eyebrow {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.auth-card h1 {
+  margin: 0 0 4px;
+}
+
+.auth-card .tagline {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+
+.ticket-divider {
+  border: none;
+  border-top: 2px dashed var(--line);
+  margin: 22px 0;
+}
+
+/* ==========================================================================
+   Dashboard — the "shift summary" ticket + terminal readout
+   ========================================================================== */
 
 .dashboard {
   width: 100%;
-  max-width: 560px;
+  max-width: 600px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.rbac-demo {
-  margin-top: 24px;
-  padding: 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  text-align: left;
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dashboard-header p {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.dashboard-header code {
+  font-family: var(--display);
+  font-size: 0.82rem;
+  background: rgba(32, 41, 31, 0.07);
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 
 .rbac-demo h2 {
-  font-size: 18px;
+  margin-bottom: 4px;
 }
 
-.rbac-demo pre {
-  margin: 12px 0 0;
+.rbac-demo .tagline {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+
+.terminal {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--ink);
+  color: var(--till-bright);
+  font-family: var(--display);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.terminal-empty {
+  color: rgba(241, 232, 206, 0.45);
+  font-family: var(--display);
+  font-size: 0.82rem;
 }

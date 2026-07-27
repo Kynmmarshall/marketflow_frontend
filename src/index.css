@@ -1,111 +1,171 @@
+/* ==========================================================================
+   SmartStock — design tokens & base styles
+
+   Direction: "the till receipt." SmartStock lives on a supermarket
+   checkout counter, so the screen borrows from what's actually printed
+   there — kraft paper, perforated ticket edges, barcode stripes, a
+   dot-matrix numeral face — instead of a generic SaaS dashboard look.
+   ========================================================================== */
+
+@import '@fontsource/space-mono/400.css';
+@import '@fontsource/space-mono/700.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* ---- Palette: kraft paper, ledger ink, till-display green, tag red ---- */
+  --paper: #f1e8ce;
+  --paper-raised: #faf5e6;
+  --ink: #20291f;
+  --ink-soft: #52604a;
+  --till: #0b6b4a;
+  --till-bright: #22c481;
+  --stamp: #b23a2b;
+  --stamp-bg: rgba(178, 58, 43, 0.1);
+  --line: #cbbb8c;
+  --shadow: 0 18px 30px -18px rgba(32, 41, 31, 0.35);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --display: 'Space Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  --body: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  font: 16px/1.55 var(--body);
+  color: var(--ink);
+  background: var(--paper);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  /* faint graph-paper dot grid, like an old stock ledger sheet */
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-color: var(--paper);
+  min-height: 100svh;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+h1 { font-size: 2rem; }
+h2 { font-size: 1.15rem; }
+
+p { margin: 0; }
+
+a {
+  color: var(--till);
+  font-weight: 600;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+button, input, select {
+  font-family: inherit;
+  font-size: 1rem;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+:focus-visible {
+  outline: 2px solid var(--till);
+  outline-offset: 2px;
+}
+
+/* ---- Eyebrow / ticket-label utility: register-tape all-caps tracking ---- */
+.eyebrow {
+  font-family: var(--display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---- Barcode-stripe divider: a decorative flourish, not a real code ---- */
+.barcode {
+  height: 20px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0 2px,
+    transparent 2px 4px,
+    var(--ink) 4px 5px,
+    transparent 5px 9px,
+    var(--ink) 9px 12px,
+    transparent 12px 14px,
+    var(--ink) 14px 15px,
+    transparent 15px 20px
+  );
+  opacity: 0.85;
+}
+
+/* ---- Ticket card: the signature shape, reused for auth + dashboard ---- */
+.ticket {
+  position: relative;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow);
+  padding: 36px 32px 30px;
+}
+
+.ticket::before,
+.ticket::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 13px;
+  background-image: radial-gradient(circle at 10px 7px, var(--paper) 8px, transparent 8.5px);
+  background-size: 20px 14px;
+  background-repeat: repeat-x;
+}
+.ticket::before { top: -1px; transform: translateY(-50%); }
+.ticket::after { bottom: -1px; transform: translateY(50%) rotate(180deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ticket {
+    animation: ticket-in 0.4s ease-out;
+  }
+}
+
+@keyframes ticket-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Session LED: the one small live-motion detail ---- */
+.led {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--till-bright);
+  box-shadow: 0 0 0 3px rgba(34, 196, 129, 0.2);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .led {
+    animation: led-blink 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
 }
