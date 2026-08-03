@@ -1,4 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// Talks to the API Gateway (Week 3), not the individual services directly —
+// auth-service and inventory-service have no port published to the host.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
 
 async function request(path, { method = 'GET', body, token } = {}) {
   const headers = { 'Content-Type': 'application/json' };
@@ -20,13 +22,17 @@ async function request(path, { method = 'GET', body, token } = {}) {
 }
 
 export function register({ name, email, password, role }) {
-  return request('/api/auth/register', { method: 'POST', body: { name, email, password, role } });
+  return request('/auth/register', { method: 'POST', body: { name, email, password, role } });
 }
 
 export function login({ email, password }) {
-  return request('/api/auth/login', { method: 'POST', body: { email, password } });
+  return request('/auth/login', { method: 'POST', body: { email, password } });
 }
 
 export function fetchReports(token) {
-  return request('/api/reports', { token });
+  return request('/reports', { token });
+}
+
+export function fetchProducts(token) {
+  return request('/products', { token });
 }

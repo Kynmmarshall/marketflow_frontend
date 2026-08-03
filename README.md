@@ -1,18 +1,21 @@
 # SmartStock Frontend
 
-React (Vite) webapp for SmartStock. Week 1 scope: register, log in, and view
-a role-gated page — talks to the [auth service](../MarketFlow/services/auth-service).
+React (Vite) webapp for SmartStock: register, log in, view role-gated pages.
+Talks only to the [API Gateway](../MarketFlow/services/gateway) (Week 3) —
+never to `auth-service` or `inventory-service` directly, since neither has a
+port published to the host anymore.
 
 ## Run it locally (without Docker)
 
 ```
 npm install
-cp .env.example .env   # points at the auth service, defaults to http://localhost:3000
+cp .env.example .env   # points at the Gateway, defaults to http://localhost:8081/api/v1
 npm run dev
 ```
 
-Make sure the auth service is running first (`docker compose up --build` from
-the `MarketFlow` repo, or `npm start` inside `services/auth-service`).
+Make sure the backend stack is running first (`docker compose up --build`
+from the `MarketFlow` repo — brings up MySQL, auth-service,
+inventory-service and the Gateway together).
 
 ## Run both containers (backend + frontend)
 
@@ -25,7 +28,8 @@ Run them in two terminals, in this order:
 docker compose up --build
 ```
 
-Starts the auth service on `http://localhost:3000`.
+Starts MySQL + all three backend services; only the Gateway is published,
+on `http://localhost:8081`.
 
 **2. Frontend** — from this repo's root:
 
@@ -35,27 +39,32 @@ docker compose up --build
 
 Starts the webapp on `http://localhost:5173`.
 
-Open `http://localhost:5173` in your browser. The two containers don't need
-to talk to each other or share a Docker network — the browser calls the
-auth service directly at `http://localhost:3000`, which works because both
-containers publish their ports to your machine's `localhost`. If you change
-where the backend is published, update `VITE_API_URL` in this repo's
-`docker-compose.yml` to match.
+Open `http://localhost:5173` in your browser. The frontend container and the
+backend containers don't need to talk to each other or share a Docker
+network — the *browser* calls the Gateway directly at
+`http://localhost:8081`, which works because both containers publish their
+ports to your machine's `localhost`. If you change where the Gateway is
+published, update `VITE_API_URL` in this repo's `docker-compose.yml` to
+match.
 
 To stop either one, `Ctrl+C` in its terminal, or `docker compose down` from
 that repo's root.
 
 ## What's here
 
-- `src/api/client.js` — fetch wrapper for the auth service (`register`,
-  `login`, `fetchReports`)
+- `src/api/client.js` — fetch wrapper for the Gateway (`register`, `login`,
+  `fetchReports`, `fetchProducts`) — base URL is `VITE_API_URL`
+  (`/api/v1/...` paths, e.g. `/api/v1/auth/login`)
 - `src/context/AuthContext.jsx` — holds the JWT + user, persists to
   `localStorage`, exposes `login`/`register`/`logout` (paired with
   `useAuth.js` for the hook, split out for React Fast Refresh)
 - `src/pages/LoginPage.jsx`, `RegisterPage.jsx` — auth forms
-- `src/pages/DashboardPage.jsx` — protected page; the "Load reports" button
-  calls the role-gated `/api/reports` endpoint so you can demonstrate RBAC
-  (and the live examiner rule-change) visually — an Admin sees data, a
-  Cashier sees a 403 once the backend rule is tightened
+- `src/pages/DashboardPage.jsx` — protected page with two demo panels:
+  "Load reports" (`/api/v1/reports`, routed to `auth-service`) and "Load
+  products" (`/api/v1/products`, routed to `inventory-service`) — same
+  Gateway, same JWT, two different backends, each response's `service` field
+  proves which one handled it. The reports panel also doubles as the Week 1
+  RBAC/live-rule-change demo (Admin sees data, Cashier gets `403` once the
+  backend rule is tightened)
 - `src/components/ProtectedRoute.jsx` — redirects to `/login` if not
   authenticated

@@ -251,6 +251,16 @@ button:disabled {
 
 .rbac-demo h2 {
   margin-bottom: 4px;
+  font-size: 1.05rem;
+}
+
+.route-target {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--till);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .rbac-demo .tagline {
