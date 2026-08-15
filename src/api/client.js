@@ -1,6 +1,6 @@
 // Talks to the API Gateway (Week 3), not the individual services directly —
 // auth-service and inventory-service have no port published to the host.
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8081/api/v1';
 
 async function request(path, { method = 'GET', body, token } = {}) {
   const headers = { 'Content-Type': 'application/json' };
