@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { login as apiLogin, register as apiRegister } from '../api/client';
 import { AuthContext } from './auth-context';
 
-const STORAGE_KEY = 'smartstock.auth';
+const STORAGE_KEY = 'smartschool.auth';
 
 export function AuthProvider({ children }) {
   const [auth, setAuth] = useState(() => {
