@@ -9,7 +9,7 @@ export function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('cashier');
+  const [role, setRole] = useState('student');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -29,9 +29,9 @@ export function RegisterPage() {
 
   return (
     <div className="auth-card ticket">
-      <span className="eyebrow">New staff ticket</span>
+      <span className="eyebrow">New account</span>
       <h1>Create account</h1>
-      <p className="tagline">Set up till access for a new admin or cashier.</p>
+      <p className="tagline">Set up access for a new student, teacher, or admin.</p>
       <hr className="ticket-divider" />
       <form onSubmit={handleSubmit}>
         <label>
@@ -55,7 +55,8 @@ export function RegisterPage() {
         <label>
           Role
           <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="cashier">Cashier</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
             <option value="admin">Admin</option>
           </select>
         </label>

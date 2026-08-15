@@ -1,5 +1,5 @@
 // Talks to the API Gateway (Week 3), not the individual services directly —
-// auth-service and inventory-service have no port published to the host.
+// auth-service and academic-service have no port published to the host.
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8081/api/v1';
 
 async function request(path, { method = 'GET', body, token } = {}) {
@@ -33,6 +33,6 @@ export function fetchReports(token) {
   return request('/reports', { token });
 }
 
-export function fetchProducts(token) {
-  return request('/products', { token });
+export function fetchCourses(token) {
+  return request('/courses', { token });
 }

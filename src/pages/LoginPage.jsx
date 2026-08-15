@@ -28,9 +28,9 @@ export function LoginPage() {
 
   return (
     <div className="auth-card ticket">
-      <span className="eyebrow">Till access</span>
+      <span className="eyebrow">Sign in</span>
       <h1>Log in</h1>
-      <p className="tagline">Sign in to open your shift.</p>
+      <p className="tagline">Sign in to your SmartSchool account.</p>
       <hr className="ticket-divider" />
       {location.state?.registered && (
         <p className="notice success">Account created. You can log in now.</p>

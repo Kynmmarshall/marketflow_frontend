@@ -15,7 +15,7 @@ export function Navbar() {
       <header className="navbar">
         <div className="brand">
           <span className="brand-mark">
-            Smart<span>Stock</span>
+            Smart<span>School</span>
           </span>
         </div>
         {auth && (

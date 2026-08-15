@@ -1,10 +1,12 @@
 /* ==========================================================================
-   SmartStock — design tokens & base styles
+   SmartSchool — design tokens & base styles
 
-   Direction: "the till receipt." SmartStock lives on a supermarket
-   checkout counter, so the screen borrows from what's actually printed
-   there — kraft paper, perforated ticket edges, barcode stripes, a
-   dot-matrix numeral face — instead of a generic SaaS dashboard look.
+   Direction: "the report card / enrollment slip." The same paper-ticket
+   visual language (kraft paper, perforated edges, barcode-style dividers, a
+   dot-matrix numeral face) reads just as naturally as a printed school
+   record as it did as a till receipt — token names below (e.g. --till,
+   --stamp) are kept as-is since they're domain-agnostic in function, not
+   literal descriptions of what's on screen.
    ========================================================================== */
 
 /* Fonts are imported in main.jsx via plain JS imports (more reliable

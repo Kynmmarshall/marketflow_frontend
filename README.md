@@ -1,9 +1,9 @@
-# SmartStock Frontend
+# SmartSchool Frontend
 
-React (Vite) webapp for SmartStock: register, log in, view role-gated pages.
-Talks only to the [API Gateway](../MarketFlow/services/gateway) (Week 3) —
-never to `auth-service` or `inventory-service` directly, since neither has a
-port published to the host anymore.
+React (Vite) webapp for SmartSchool: register, log in, view role-gated
+pages. Talks only to the [API Gateway](../MarketFlow/services/gateway) (Week
+3) — never to `auth-service` or `academic-service` directly, since neither
+has a port published to the host anymore.
 
 ## Run it locally (without Docker)
 
@@ -15,7 +15,7 @@ npm run dev
 
 Make sure the backend stack is running first (`docker compose up --build`
 from the `MarketFlow` repo — brings up MySQL, auth-service,
-inventory-service and the Gateway together).
+academic-service and the Gateway together).
 
 ## Run both containers (backend + frontend)
 
@@ -28,8 +28,8 @@ Run them in two terminals, in this order:
 docker compose up --build
 ```
 
-Starts MySQL + all three backend services; only the Gateway is published,
-on `http://localhost:8081`.
+Starts MySQL + all backend services; only the Gateway is published, on
+`http://localhost:8081`.
 
 **2. Frontend** — from this repo's root:
 
@@ -53,18 +53,19 @@ that repo's root.
 ## What's here
 
 - `src/api/client.js` — fetch wrapper for the Gateway (`register`, `login`,
-  `fetchReports`, `fetchProducts`) — base URL is `VITE_API_URL`
+  `fetchReports`, `fetchCourses`) — base URL is `VITE_API_URL`
   (`/api/v1/...` paths, e.g. `/api/v1/auth/login`)
 - `src/context/AuthContext.jsx` — holds the JWT + user, persists to
   `localStorage`, exposes `login`/`register`/`logout` (paired with
   `useAuth.js` for the hook, split out for React Fast Refresh)
-- `src/pages/LoginPage.jsx`, `RegisterPage.jsx` — auth forms
-- `src/pages/DashboardPage.jsx` — protected page with two demo panels:
-  "Load reports" (`/api/v1/reports`, routed to `auth-service`) and "Load
-  products" (`/api/v1/products`, routed to `inventory-service`) — same
-  Gateway, same JWT, two different backends, each response's `service` field
-  proves which one handled it. The reports panel also doubles as the Week 1
-  RBAC/live-rule-change demo (Admin sees data, Cashier gets `403` once the
-  backend rule is tightened)
+- `src/pages/LoginPage.jsx`, `RegisterPage.jsx` — auth forms (role select:
+  Student / Teacher / Admin)
+- `src/pages/DashboardPage.jsx` — protected page with demo panels: "Load
+  reports" (`/api/v1/reports`, routed to `auth-service`) and "Load courses"
+  (`/api/v1/courses`, routed to `academic-service`) — same Gateway, same
+  JWT, two different backends, each response's `service` field proves which
+  one handled it. The reports panel also doubles as the Week 1
+  RBAC/live-rule-change demo (Admin/Teacher see data, Student gets `403`
+  once the backend rule is tightened)
 - `src/components/ProtectedRoute.jsx` — redirects to `/login` if not
   authenticated

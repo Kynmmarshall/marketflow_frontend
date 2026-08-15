@@ -179,9 +179,15 @@ button:disabled {
   background: var(--stamp-bg);
 }
 
-.role-cashier {
+.role-teacher {
   color: var(--till);
   background: rgba(11, 107, 74, 0.08);
+}
+
+.role-student {
+  color: var(--ink-soft);
+  background: var(--paper-raised);
+  border-color: var(--line);
 }
 
 /* ==========================================================================
